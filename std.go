@@ -8,102 +8,131 @@ import (
 var std = NewManager("default")
 
 // Std get default event manager
-func Std() *Manager { return std }
+func Std() *Manager {
+	_ = "STUB: not implemented"
 
-// Config set default event manager options
-func Config(fn ...OptionFn) { std.WithOptions(fn...) }
+	// Config set default event manager options
+	return nil
+}
+
+func Config(fn ...OptionFn) { _ = "STUB: not implemented"; return }
 
 /*************************************************************
  * region Listener
  *************************************************************/
 
 // On register a listener to the event. alias of Listen()
-func On(name string, listener Listener, priority ...int) {
-	std.On(name, listener, priority...)
-}
+func On(name string, listener Listener, priority ...int) { _ = "STUB: not implemented"; return }
 
 // Once register a listener to the event. trigger once
-func Once(name string, listener Listener, priority ...int) {
-	std.Once(name, listener, priority...)
-}
+func Once(name string, listener Listener, priority ...int) { _ = "STUB: not implemented"; return }
 
 // Listen register a listener to the event
-func Listen(name string, listener Listener, priority ...int) {
-	std.Listen(name, listener, priority...)
-}
+func Listen(name string, listener Listener, priority ...int) { _ = "STUB: not implemented"; return }
 
 // Subscribe register a listener to the event
-func Subscribe(sbr Subscriber) { std.Subscribe(sbr) }
+func Subscribe(sbr Subscriber) {
+	_ = "STUB: not implemented"
 
-// AddSubscriber register a listener to the event
-func AddSubscriber(sbr Subscriber) { std.AddSubscriber(sbr) }
+	// AddSubscriber register a listener to the event
+	return
+}
+
+func AddSubscriber(sbr Subscriber) { _ = "STUB: not implemented"; return }
 
 // HasListeners has listeners for the event name.
-func HasListeners(name string) bool { return std.HasListeners(name) }
+func HasListeners(name string) bool { _ = "STUB: not implemented"; return false }
 
 // Reset the default event manager
-func Reset() { std.Clear() }
+func Reset() {
+	_ = "STUB: not implemented"
 
-// CloseWait close chan and wait for all async events done.
-func CloseWait() error { return std.CloseWait() }
+	// CloseWait close chan and wait for all async events done.
+	return
+}
+
+func CloseWait() error { _ = "STUB: not implemented"; return nil }
 
 /*************************************************************
  * region Trigger
  *************************************************************/
 
 // AsyncFire simple async fire event by 'go' keywords
-func AsyncFire(e Event) { std.AsyncFire(e) }
+func AsyncFire(e Event) {
+	_ = "STUB: not implemented"
 
-// Async fire event by channel
-func Async(name string, params M) { std.Async(name, params) }
+	// Async fire event by channel
+	return
+}
+
+func Async(name string, params M) { _ = "STUB: not implemented"; return }
 
 // FireAsync fire event by channel
-func FireAsync(e Event) { std.FireAsync(e) }
+func FireAsync(e Event) {
+	_ = "STUB: not implemented"
 
-// FireAsyncCtx async fire event by go channel, and with context TODO need?
-// func FireAsyncCtx(ctx context.Context, e Event)
+	// FireAsyncCtx async fire event by go channel, and with context TODO need?
+	// func FireAsyncCtx(ctx context.Context, e Event)
+	return
+}
 
 // Trigger alias of Fire
-func Trigger(name string, params M) (error, Event) { return std.Fire(name, params) }
+func Trigger(name string, params M) (error, Event) {
+	_ = "STUB: not implemented"
+	return nil, *
 
-// Fire listeners by name.
-func Fire(name string, params M) (error, Event) { return std.Fire(name, params) }
+	// Fire listeners by name.
+	new(Event)
+}
 
-// FireCtx listeners by name with context.
+func Fire(name string, params M) (error, Event) {
+	_ = "STUB: not implemented"
+	return nil,
+
+		// FireCtx listeners by name with context.
+		*new(Event)
+}
+
 func FireCtx(ctx context.Context, name string, params M) (error, Event) {
-	return std.FireCtx(ctx, name, params)
+	_ = "STUB: not implemented"
+	return nil, *new(Event)
 }
 
 // FireEvent fire listeners by Event instance.
-func FireEvent(e Event) error { return std.FireEvent(e) }
+func FireEvent(e Event) error { _ = "STUB: not implemented"; return nil }
 
 // FireEventCtx fire listeners by Event instance with context.
-func FireEventCtx(ctx context.Context, e Event) error { return std.FireEventCtx(ctx, e) }
+func FireEventCtx(ctx context.Context, e Event) error { _ = "STUB: not implemented"; return nil }
 
 // TriggerEvent alias of FireEvent
-func TriggerEvent(e Event) error { return std.FireEvent(e) }
+func TriggerEvent(e Event) error { _ = "STUB: not implemented"; return nil }
 
 // MustFire fire event by name. will panic on error
-func MustFire(name string, params M) Event { return std.MustFire(name, params) }
+func MustFire(name string, params M) Event { _ = "STUB: not implemented"; return *new(Event) }
 
 // MustTrigger alias of MustFire
-func MustTrigger(name string, params M) Event { return std.MustFire(name, params) }
+func MustTrigger(name string, params M) Event { _ = "STUB: not implemented"; return *new(Event) }
 
 // FireBatch fire multi event at once.
-func FireBatch(es ...any) []error { return std.FireBatch(es...) }
+func FireBatch(es ...any) []error { _ = "STUB: not implemented"; return nil }
 
 /*************************************************************
  * region Event
  *************************************************************/
 
 // AddEvent add a pre-defined event.
-func AddEvent(e Event) error { return std.AddEvent(e) }
+func AddEvent(e Event) error { _ = "STUB: not implemented"; return nil }
 
 // AddEventFc add a pre-defined event factory func to manager.
-func AddEventFc(name string, fc FactoryFunc) error { return std.AddEventFc(name, fc) }
+func AddEventFc(name string, fc FactoryFunc) error { _ = "STUB: not implemented"; return nil }
 
 // GetEvent get event by name.
-func GetEvent(name string) (Event, bool) { return std.GetEvent(name) }
+func GetEvent(name string) (Event, bool) {
+	_ = "STUB: not implemented"
+	return *
 
-// HasEvent has event check.
-func HasEvent(name string) bool { return std.HasEvent(name) }
+	// HasEvent has event check.
+	new(Event), false
+}
+
+func HasEvent(name string) bool { _ = "STUB: not implemented"; return false }

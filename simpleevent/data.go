@@ -15,26 +15,24 @@ type EventData struct {
 
 // Name get
 func (e *EventData) Name() string {
-	return e.name
+	_ = "STUB: not implemented"
+
+	// Abort abort event exec
+	return ""
 }
 
-// Abort abort event exec
 func (e *EventData) Abort() {
-	e.aborted = true
+	_ = "STUB: not implemented"
+
+	// IsAborted check.
+	return
 }
 
-// IsAborted check.
-func (e *EventData) IsAborted() bool {
-	return e.aborted
-}
+func (e *EventData) IsAborted() bool { _ = "STUB: not implemented"; return false }
 
 func (e *EventData) init(name string, data []any) {
 	e.name = name
 	e.Data = data
 }
 
-func (e *EventData) reset() {
-	e.name = ""
-	e.Data = make([]any, 0)
-	e.aborted = false
-}
+func (e *EventData) reset() { _ = "STUB: not implemented"; return }

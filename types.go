@@ -2,7 +2,6 @@ package event
 
 import (
 	"reflect"
-	"sort"
 )
 
 // There are some default priority constants
@@ -30,12 +29,14 @@ type ListenerFunc func(e Event) error
 
 // Handle event. implements the Listener interface
 func (fn ListenerFunc) Handle(e Event) error {
-	return fn(e)
+	_ = "STUB: not implemented"
+
+	// Subscriber event subscriber interface.
+	//
+	// you can register multi event listeners in a struct func.
+	return nil
 }
 
-// Subscriber event subscriber interface.
-//
-// you can register multi event listeners in a struct func.
 type Subscriber interface {
 	// SubscribedEvents register event listeners
 	//
@@ -60,19 +61,15 @@ type ListenerQueue struct {
 }
 
 // Len get items length
-func (lq *ListenerQueue) Len() int {
-	return len(lq.items)
-}
+func (lq *ListenerQueue) Len() int { _ = "STUB: not implemented"; return 0 }
 
 // IsEmpty get items length == 0
-func (lq *ListenerQueue) IsEmpty() bool {
-	return len(lq.items) == 0
-}
+func (lq *ListenerQueue) IsEmpty() bool { _ = "STUB: not implemented"; return false }
 
 // Push get items length
 func (lq *ListenerQueue) Push(li *ListenerItem) *ListenerQueue {
-	lq.items = append(lq.items, li)
-	return lq
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Sort the queue items by ListenerItem's priority.
@@ -81,54 +78,34 @@ func (lq *ListenerQueue) Push(li *ListenerItem) *ListenerQueue {
 //
 //	High > Low
 func (lq *ListenerQueue) Sort() *ListenerQueue {
-	// if lq.IsEmpty() {
-	// 	return lq
-	// }
-	ls := ByPriorityItems(lq.items)
-
-	// check items is sorted
-	if !sort.IsSorted(ls) {
-		sort.Sort(ls)
-	}
-
-	return lq
+	_ = "STUB: not implemented"
+	//	if lq.IsEmpty() {
+	//		return lq
+	//	}
+	return nil
 }
+
+// check items is sorted
 
 // Items get all ListenerItem
 func (lq *ListenerQueue) Items() []*ListenerItem {
-	return lq.items
+	_ = "STUB: not implemented"
+
+	// Remove a listener from the queue
+	return nil
 }
 
-// Remove a listener from the queue
-func (lq *ListenerQueue) Remove(listener Listener) {
-	if listener == nil {
-		return
-	}
+func (lq *ListenerQueue) Remove(listener Listener) { _ = "STUB: not implemented"; return }
 
-	// unsafe.Pointer(listener)
-	ptrVal := getListenCompareKey(listener)
-
-	var newItems []*ListenerItem
-	for _, li := range lq.items {
-		liPtrVal := getListenCompareKey(li.Listener)
-		if liPtrVal == ptrVal {
-			continue
-		}
-
-		newItems = append(newItems, li)
-	}
-
-	lq.items = newItems
-}
+// unsafe.Pointer(listener)
 
 // Clear all listeners
-func (lq *ListenerQueue) Clear() {
-	lq.items = lq.items[:0]
-}
+func (lq *ListenerQueue) Clear() { _ = "STUB: not implemented"; return }
 
 // getListenCompareKey get listener compare key
 func getListenCompareKey(src Listener) reflect.Value {
-	return reflect.ValueOf(src)
+	_ = "STUB: not implemented"
+	return *new(reflect.Value)
 }
 
 /*************************************************************
@@ -140,15 +117,13 @@ type ByPriorityItems []*ListenerItem
 
 // Len get items length
 func (ls ByPriorityItems) Len() int {
-	return len(ls)
+	_ = "STUB: not implemented"
+
+	// Less implements the sort.Interface.Less.
+	return 0
 }
 
-// Less implements the sort.Interface.Less.
-func (ls ByPriorityItems) Less(i, j int) bool {
-	return ls[i].Priority > ls[j].Priority
-}
+func (ls ByPriorityItems) Less(i, j int) bool { _ = "STUB: not implemented"; return false }
 
 // Swap implements the sort.Interface.Swap.
-func (ls ByPriorityItems) Swap(i, j int) {
-	ls[i], ls[j] = ls[j], ls[i]
-}
+func (ls ByPriorityItems) Swap(i, j int) { _ = "STUB: not implemented"; return }

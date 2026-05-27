@@ -62,28 +62,16 @@ type Options struct {
 type OptionFn func(o *Options)
 
 // UsePathMode set event name match mode to ModePath
-func UsePathMode(o *Options) { o.MatchMode = ModePath }
+func UsePathMode(o *Options) { _ = "STUB: not implemented"; return }
 
 // WithChannelSize set channel size for async fire event.
-func WithChannelSize(size int) OptionFn {
-	return func(o *Options) {
-		o.ChannelSize = size
-	}
-}
+func WithChannelSize(size int) OptionFn { _ = "STUB: not implemented"; return *new(OptionFn) }
 
 // WithConsumerNum set consumer num for async fire
-func WithConsumerNum(num int) OptionFn {
-	return func(o *Options) {
-		o.ConsumerNum = num
-	}
-}
+func WithConsumerNum(num int) OptionFn { _ = "STUB: not implemented"; return *new(OptionFn) }
 
 // EnableLock enable lock on fire event.
-func EnableLock(enable bool) OptionFn {
-	return func(o *Options) {
-		o.EnableLock = enable
-	}
-}
+func EnableLock(enable bool) OptionFn { _ = "STUB: not implemented"; return *new(OptionFn) }
 
 // Event interface
 type Event interface {
@@ -134,93 +122,72 @@ type BasicEvent struct {
 }
 
 // New create an event instance
-func New(name string, data M) *BasicEvent { return NewBasic(name, data) }
+func New(name string, data M) *BasicEvent { _ = "STUB: not implemented"; return nil }
 
 // NewEvent create an event instance
-func NewEvent(name string, data M) *BasicEvent { return NewBasic(name, data) }
+func NewEvent(name string, data M) *BasicEvent { _ = "STUB: not implemented"; return nil }
 
 // NewBasic new a basic event instance
-func NewBasic(name string, data M) *BasicEvent {
-	if data == nil {
-		data = make(map[string]any)
-	}
-
-	return &BasicEvent{
-		name: name,
-		data: data,
-	}
-}
+func NewBasic(name string, data M) *BasicEvent { _ = "STUB: not implemented"; return nil }
 
 // Abort event loop exec
-func (e *BasicEvent) Abort(abort bool) { e.aborted = abort }
+func (e *BasicEvent) Abort(abort bool) {
+	_ = "STUB: not implemented"
 
-// Fill event data
-func (e *BasicEvent) Fill(target any, data M) *BasicEvent {
-	if data != nil {
-		e.data = data
-	}
-
-	e.target = target
-	return e
+	// Fill event data
+	return
 }
 
+func (e *BasicEvent) Fill(target any, data M) *BasicEvent { _ = "STUB: not implemented"; return nil }
+
 // AttachTo add current event to the event manager.
-func (e *BasicEvent) AttachTo(em ManagerFace) error { return em.AddEvent(e) }
+func (e *BasicEvent) AttachTo(em ManagerFace) error { _ = "STUB: not implemented"; return nil }
 
 // Get data by index
-func (e *BasicEvent) Get(key string) any {
-	if v, ok := e.data[key]; ok {
-		return v
-	}
+func (e *BasicEvent) Get(key string) any { _ = "STUB: not implemented"; return *new(any) }
+
+// Add value by key
+func (e *BasicEvent) Add(key string, val any) { _ = "STUB: not implemented"; return }
+
+// Set value by key
+func (e *BasicEvent) Set(key string, val any) { _ = "STUB: not implemented"; return }
+
+// Name get event name
+func (e *BasicEvent) Name() string {
+	_ = "STUB: not implemented"
+
+	// Data get all data
+	return ""
+}
+
+func (e *BasicEvent) Data() map[string]any {
+	_ = "STUB: not implemented"
+
+	// IsAborted check.
 	return nil
 }
 
-// Add value by key
-func (e *BasicEvent) Add(key string, val any) {
-	if _, ok := e.data[key]; !ok {
-		e.Set(key, val)
-	}
+func (e *BasicEvent) IsAborted() bool {
+	_ = "STUB: not implemented"
+
+	// Target get target
+	return false
 }
 
-// Set value by key
-func (e *BasicEvent) Set(key string, val any) {
-	if e.data == nil {
-		e.data = make(map[string]any)
-	}
-	e.data[key] = val
+func (e *BasicEvent) Target() any {
+	_ = "STUB: not implemented"
+
+	// SetName set event name
+	return *new(any)
 }
 
-// Name get event name
-func (e *BasicEvent) Name() string { return e.name }
-
-// Data get all data
-func (e *BasicEvent) Data() map[string]any { return e.data }
-
-// IsAborted check.
-func (e *BasicEvent) IsAborted() bool { return e.aborted }
-
-// Target get target
-func (e *BasicEvent) Target() any { return e.target }
-
-// SetName set event name
-func (e *BasicEvent) SetName(name string) *BasicEvent {
-	e.name = name
-	return e
-}
+func (e *BasicEvent) SetName(name string) *BasicEvent { _ = "STUB: not implemented"; return nil }
 
 // SetData set data to the event
-func (e *BasicEvent) SetData(data M) Event {
-	if data != nil {
-		e.data = data
-	}
-	return e
-}
+func (e *BasicEvent) SetData(data M) Event { _ = "STUB: not implemented"; return *new(Event) }
 
 // SetTarget set event target
-func (e *BasicEvent) SetTarget(target any) *BasicEvent {
-	e.target = target
-	return e
-}
+func (e *BasicEvent) SetTarget(target any) *BasicEvent { _ = "STUB: not implemented"; return nil }
 
 // ContextTrait event context trait
 type ContextTrait struct {
@@ -230,23 +197,24 @@ type ContextTrait struct {
 
 // Context get context
 func (t *ContextTrait) Context() context.Context {
-	if t.ctx == nil {
-		return context.Background()
-	}
-	return t.ctx
+	_ = "STUB: not implemented"
+	return *new(context.Context)
 }
 
 // WithContext set context
 func (t *ContextTrait) WithContext(ctx context.Context) {
-	t.ctx = ctx
+	_ = "STUB: not implemented"
+
+	// ContextEvent event with context
+	return
 }
 
-// ContextEvent event with context
 type contextEvent struct {
 	Event
 	ContextTrait
 }
 
 func newContextEvent(ctx context.Context, e Event) ContextAble {
-	return &contextEvent{Event: e, ContextTrait: ContextTrait{ctx: ctx}}
+	_ = "STUB: not implemented"
+	return *new(ContextAble)
 }

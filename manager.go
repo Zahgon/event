@@ -1,7 +1,6 @@
 package event
 
 import (
-	"reflect"
 	"sync"
 )
 
@@ -38,40 +37,25 @@ type Manager struct {
 }
 
 // NewM create event manager. alias of the NewManager()
-func NewM(name string, fns ...OptionFn) *Manager {
-	return NewManager(name, fns...)
-}
+func NewM(name string, fns ...OptionFn) *Manager { _ = "STUB: not implemented"; return nil }
 
 // NewManager create event manager
-func NewManager(name string, fns ...OptionFn) *Manager {
-	em := &Manager{
-		name: name,
-		// ctx:  context.Background(),
-		// sample event
-		sample: &BasicEvent{},
-		// events storage
-		eventFc: make(map[string]FactoryFunc),
-		// listeners
-		listeners:     make(map[string]*ListenerQueue),
-		listenedNames: make(map[string]int),
-	}
+func NewManager(name string, fns ...OptionFn) *Manager { _ = "STUB: not implemented"; return nil }
 
-	// em.EnableLock = true
-	// for async fire by goroutine
-	em.ConsumerNum = defaultConsumerNum
-	em.ChannelSize = defaultChannelSize
+// ctx:  context.Background(),
+// sample event
 
-	// apply options
-	return em.WithOptions(fns...)
-}
+// events storage
+
+// listeners
+
+// em.EnableLock = true
+// for async fire by goroutine
+
+// apply options
 
 // WithOptions create event manager with options
-func (em *Manager) WithOptions(fns ...OptionFn) *Manager {
-	for _, fn := range fns {
-		fn(&em.Options)
-	}
-	return em
-}
+func (em *Manager) WithOptions(fns ...OptionFn) *Manager { _ = "STUB: not implemented"; return nil }
 
 /*************************************************************
  * region Register listeners
@@ -79,22 +63,20 @@ func (em *Manager) WithOptions(fns ...OptionFn) *Manager {
 
 // AddListener register an event handler/listener. alias of the method On()
 func (em *Manager) AddListener(name string, listener Listener, priority ...int) {
-	em.On(name, listener, priority...)
+	_ = "STUB: not implemented"
+	return
 }
 
 // Listen register an event handler/listener. alias of the On()
 func (em *Manager) Listen(name string, listener Listener, priority ...int) {
-	em.On(name, listener, priority...)
+	_ = "STUB: not implemented"
+	return
 }
 
 // Once register an event handler/listener. trigger once.
 func (em *Manager) Once(name string, listener Listener, priority ...int) {
-	var listenerOnce Listener
-	listenerOnce = ListenerFunc(func(e Event) error {
-		em.RemoveListener(name, listenerOnce)
-		return listener.Handle(e)
-	})
-	em.On(name, listenerOnce, priority...)
+	_ = "STUB: not implemented"
+	return
 }
 
 // On register a event handler/listener. can setting priority.
@@ -104,120 +86,60 @@ func (em *Manager) Once(name string, listener Listener, priority ...int) {
 //	em.On("evt0", listener)
 //	em.On("evt0", listener, High)
 func (em *Manager) On(name string, listener Listener, priority ...int) {
-	pv := Normal
-	if len(priority) > 0 {
-		pv = priority[0]
-	}
-
-	em.addListenerItem(name, &ListenerItem{pv, listener})
+	_ = "STUB: not implemented"
+	return
 }
 
 // Subscribe add events by subscriber interface. alias of the AddSubscriber()
-func (em *Manager) Subscribe(sbr Subscriber) {
-	em.AddSubscriber(sbr)
-}
+func (em *Manager) Subscribe(sbr Subscriber) { _ = "STUB: not implemented"; return }
 
 // AddSubscriber add events by subscriber interface.
 //
 // you can register multi event listeners in a struct func.
 // more usage please see README or tests.
-func (em *Manager) AddSubscriber(sbr Subscriber) {
-	for name, listener := range sbr.SubscribedEvents() {
-		switch lt := listener.(type) {
-		case Listener:
-			em.On(name, lt)
-		// case ListenerFunc:
-		// 	em.On(name, lt)
-		case ListenerItem:
-			em.addListenerItem(name, &lt)
-		default:
-			panic("event: the value must be an Listener or ListenerItem instance")
-		}
-	}
-}
+func (em *Manager) AddSubscriber(sbr Subscriber) { _ = "STUB: not implemented"; return }
+
+// case ListenerFunc:
+// 	em.On(name, lt)
 
 func (em *Manager) addListenerItem(name string, li *ListenerItem) {
-	name = goodName(name, true)
-	if li.Listener == nil {
-		panicf("event: the event %q listener cannot be empty", name)
-	}
-	if reflect.ValueOf(li.Listener).Kind() == reflect.Struct {
-		panicf("event: %q - struct listener must be pointer", name)
-	}
-
-	// exists, append it.
-	if lq, ok := em.listeners[name]; ok {
-		lq.Push(li)
-	} else { // first add.
-		em.listenedNames[name] = 1
-		em.listeners[name] = (&ListenerQueue{}).Push(li)
-	}
+	_ = "STUB: not implemented"
+	return
 }
+
+// exists, append it.
+
+// first add.
 
 /*************************************************************
  * region Event Manage
  *************************************************************/
 
 // AddEvent add a pre-defined event instance to manager.
-func (em *Manager) AddEvent(e Event) error {
-	name, err := goodNameOrErr(e.Name(), false)
-	if err != nil {
-		return err
-	}
-
-	if ec, ok := e.(Cloneable); ok {
-		em.addEventFc(name, func() Event {
-			return ec.Clone()
-		})
-	} else {
-		em.addEventFc(name, func() Event {
-			return e
-		})
-	}
-	return nil
-}
+func (em *Manager) AddEvent(e Event) error { _ = "STUB: not implemented"; return nil }
 
 // AddEventFc add a pre-defined event factory func to manager.
 func (em *Manager) AddEventFc(name string, fc FactoryFunc) (err error) {
-	name, err = goodNameOrErr(name, false)
-	if err == nil {
-		em.addEventFc(name, fc)
-	}
-	return err
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (em *Manager) addEventFc(name string, fc FactoryFunc) {
-	em.Lock()
-	em.eventFc[name] = fc
-	em.Unlock()
-}
+func (em *Manager) addEventFc(name string, fc FactoryFunc) { _ = "STUB: not implemented"; return }
 
 // GetEvent get a pre-defined event instance by name
 func (em *Manager) GetEvent(name string) (e Event, ok bool) {
-	fc, ok := em.eventFc[name]
-	if ok {
-		return fc(), true
-	}
-	return
+	_ = "STUB: not implemented"
+	return *new(Event), false
 }
 
 // HasEvent has pre-defined event check
-func (em *Manager) HasEvent(name string) bool {
-	_, ok := em.eventFc[name]
-	return ok
-}
+func (em *Manager) HasEvent(name string) bool { _ = "STUB: not implemented"; return false }
 
 // RemoveEvent delete pre-define Event by name
-func (em *Manager) RemoveEvent(name string) {
-	if _, ok := em.eventFc[name]; ok {
-		delete(em.eventFc, name)
-	}
-}
+func (em *Manager) RemoveEvent(name string) { _ = "STUB: not implemented"; return }
 
 // RemoveEvents remove all registered events
-func (em *Manager) RemoveEvents() {
-	em.eventFc = map[string]FactoryFunc{}
-}
+func (em *Manager) RemoveEvents() { _ = "STUB: not implemented"; return }
 
 /*************************************************************
  * region Helper Methods
@@ -225,38 +147,32 @@ func (em *Manager) RemoveEvents() {
 
 // newBasicEvent create new BasicEvent by clone em.sample
 func (em *Manager) newBasicEvent(name string, data M) *BasicEvent {
-	var cp = *em.sample
-	cp.SetName(name)
-	cp.SetData(data)
-	return &cp
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // HasListeners check has direct listeners for the event name.
-func (em *Manager) HasListeners(name string) bool {
-	_, ok := em.listenedNames[name]
-	return ok
-}
+func (em *Manager) HasListeners(name string) bool { _ = "STUB: not implemented"; return false }
 
 // Listeners get all listeners
-func (em *Manager) Listeners() map[string]*ListenerQueue { return em.listeners }
+func (em *Manager) Listeners() map[string]*ListenerQueue {
+	_ = "STUB: not implemented"
 
-// ListenersByName get listeners by given event name
+	// ListenersByName get listeners by given event name
+	return nil
+}
+
 func (em *Manager) ListenersByName(name string) *ListenerQueue {
-	return em.listeners[name]
+	_ = "STUB: not implemented"
+	return nil
+
+	// ListenersCount get listeners number for the event name.
 }
 
-// ListenersCount get listeners number for the event name.
-func (em *Manager) ListenersCount(name string) int {
-	if lq, ok := em.listeners[name]; ok {
-		return lq.Len()
-	}
-	return 0
-}
+func (em *Manager) ListenersCount(name string) int { _ = "STUB: not implemented"; return 0 }
 
 // ListenedNames get listened event names
-func (em *Manager) ListenedNames() map[string]int {
-	return em.listenedNames
-}
+func (em *Manager) ListenedNames() map[string]int { _ = "STUB: not implemented"; return nil }
 
 // RemoveListener remove a given listener, you can limit event name.
 //
@@ -265,67 +181,36 @@ func (em *Manager) ListenedNames() map[string]int {
 //	RemoveListener("", listener)
 //	RemoveListener("name", listener) // limit event name.
 func (em *Manager) RemoveListener(name string, listener Listener) {
-	if name != "" {
-		if lq, ok := em.listeners[name]; ok {
-			lq.Remove(listener)
-
-			// delete from manager
-			if lq.IsEmpty() {
-				delete(em.listeners, name)
-				delete(em.listenedNames, name)
-			}
-		}
-		return
-	}
-
-	// name is empty. find all listener and remove matched.
-	for name, lq := range em.listeners {
-		lq.Remove(listener)
-
-		// delete from manager
-		if lq.IsEmpty() {
-			delete(em.listeners, name)
-			delete(em.listenedNames, name)
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }
+
+// delete from manager
+
+// name is empty. find all listener and remove matched.
+
+// delete from manager
 
 // RemoveListeners remove listeners by given name
-func (em *Manager) RemoveListeners(name string) {
-	_, ok := em.listenedNames[name]
-	if ok {
-		em.listeners[name].Clear()
+func (em *Manager) RemoveListeners(name string) { _ = "STUB: not implemented"; return }
 
-		// delete from manager
-		delete(em.listeners, name)
-		delete(em.listenedNames, name)
-	}
-}
+// delete from manager
 
 // Clear alias of the Reset()
-func (em *Manager) Clear() { em.Reset() }
+func (em *Manager) Clear() {
+	_ = "STUB: not implemented"
 
-// Close event channel, deny to fire new event.
-func (em *Manager) Close() error {
-	if em.ch != nil {
-		close(em.ch)
-	}
-	return nil
+	// Close event channel, deny to fire new event.
+	return
 }
+
+func (em *Manager) Close() error { _ = "STUB: not implemented"; return nil }
 
 // Reset the manager, clear all data.
 func (em *Manager) Reset() {
+	_ = "STUB: not implemented"
 	// clear all listeners
-	for _, lq := range em.listeners {
-		lq.Clear()
-	}
-
-	// reset all
-	em.ch = nil
-	em.oc = sync.Once{}
-	em.wg = sync.WaitGroup{}
-
-	em.eventFc = make(map[string]FactoryFunc)
-	em.listeners = make(map[string]*ListenerQueue)
-	em.listenedNames = make(map[string]int)
+	return
 }
+
+// reset all
